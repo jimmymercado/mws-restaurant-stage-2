@@ -4,6 +4,8 @@ let restaurants,
 var map
 var markers = []
 
+
+
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
@@ -136,11 +138,25 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
  * Create restaurant HTML.
  */
 createRestaurantHTML = (restaurant) => {
+
+
   const li = document.createElement('li');
+
+/*
+ * Added by Jimmy Mercado
+ * include srcset and alt attrib
+*/
+  const imgPath = DBHelper.imageUrlForRestaurant(restaurant);
+  const imgPathFileName = imgPath.substring(0, (imgPath.length - 4));
+  const imgFileExtesion = imgPath.substring((imgPath.length - 4), imgPath.length);
 
   const image = document.createElement('img');
   image.className = 'restaurant-img';
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  image.src = imgPathFileName + '_800px' + imgFileExtesion//DBHelper.imageUrlForRestaurant(restaurant);
+
+  image.setAttribute('alt', restaurant.photo_description);
+  image.setAttribute("srcset", imgPathFileName + '_270px' + imgFileExtesion + ' 1140w, ' + imgPathFileName + '_400px' + imgFileExtesion + ' 900w, ' + imgPathFileName + '_270px' + imgFileExtesion + ' 646w, ' + imgPathFileName + '_400px' + imgFileExtesion + ' 645w ' )
+
   li.append(image);
 
   const name = document.createElement('h1');

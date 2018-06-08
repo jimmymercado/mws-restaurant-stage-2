@@ -59,6 +59,18 @@ fillRestaurantHTML = (restaurant = self.restaurant) => {
   image.className = 'restaurant-img'
   image.src = DBHelper.imageUrlForRestaurant(restaurant);
 
+/*
+ * Added by Jimmy Mercado
+ * include srcset and alt attrib
+*/
+image.setAttribute('alt', restaurant.photo_description);
+const imgPath = DBHelper.imageUrlForRestaurant(restaurant);
+const imgPathFileName = imgPath.substring(0, (imgPath.length - 4));
+const imgFileExtesion = imgPath.substring((imgPath.length - 4), imgPath.length);
+image.setAttribute("srcset", imgPathFileName + imgFileExtesion + ' 1140w, ' + imgPathFileName + '_400px' + imgFileExtesion + ' 900w, ' + imgPathFileName + '_270px' + imgFileExtesion + ' 650w, ' + imgPathFileName + imgFileExtesion + ' 645w ' )
+
+
+
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
 
@@ -115,7 +127,7 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
 /**
  * Create review HTML and add it to the webpage.
  */
-createReviewHTML = (review) => {
+createReviewHTML_OLD = (review) => {
   const li = document.createElement('li');
   const name = document.createElement('p');
   name.innerHTML = review.name;
@@ -135,6 +147,37 @@ createReviewHTML = (review) => {
 
   return li;
 }
+/*
+ * Added by Jimmy Mercado
+ * Create review HTML and add it to the webpage.
+*/
+createReviewHTML = (review) => {
+  const li = document.createElement('li');
+  //encapsulate with div tag
+  const div = document.createElement('div');
+  div.className = 'reviewHeader';
+  const name = document.createElement('p');
+  name.innerHTML = review.name;
+  //li.appendChild(name);
+
+  const date = document.createElement('p');
+  date.innerHTML = review.date;
+  //li.appendChild(date);
+  div.innerHTML = name.outerHTML + ' ' + date.outerHTML;
+  li.appendChild(div);
+
+  const rating = document.createElement('div');
+  rating.className = 'ratingBox';
+  rating.innerHTML = `Rating: ${review.rating}`;
+  li.appendChild(rating);
+
+  const comments = document.createElement('p');
+  comments.innerHTML = review.comments;
+  li.appendChild(comments);
+
+  return li;
+}
+
 
 /**
  * Add restaurant name to the breadcrumb navigation menu
