@@ -272,6 +272,9 @@ nav h1{
     padding:0 ;
 }
 
+#restaurant-img{
+    border-top-left-radius: 25px;
+}
 
 #reviews-list li p {
     margin: 0 0 10px;
@@ -279,10 +282,13 @@ nav h1{
 #reviews-list li {
     padding:0;
     width:100%;
+    border-top-left-radius: 25px;
+    border-bottom-right-radius: 25px;
 }
 .reviewHeader{
     background-color: #252831;    
     overflow: auto;
+    border-top-left-radius: 25px;
 }
 #reviews-list li p {
     margin: 0;
