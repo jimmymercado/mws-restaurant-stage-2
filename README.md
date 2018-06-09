@@ -8,8 +8,8 @@ These are my codes and solutions for Stage 1.
 
 
 ## Development Environment
-OS: Windows 7 Ent. SP1
-Server: Python 3.6.3
-Runtime: NodeJS 
-Editor: Visual Studio Code
-Browser: Chrome 66
+- OS: Windows 7 Ent. SP1
+- Server: Python 3.6.3
+- Runtime: NodeJS 
+- Editor: Visual Studio Code
+- Browser: Chrome 66
