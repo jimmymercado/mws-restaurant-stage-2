@@ -144,8 +144,10 @@ createRestaurantHTML = (restaurant) => {
 
 /*
  * Added by Jimmy Mercado
- * include srcset and alt attrib
+ * include aria-label srcset and alt attrib
 */
+  li.setAttribute("aria-label", "restaurant details for " + restaurant.name);
+
   const imgPath = DBHelper.imageUrlForRestaurant(restaurant);
   const imgPathFileName = imgPath.substring(0, (imgPath.length - 4));
   const imgFileExtesion = imgPath.substring((imgPath.length - 4), imgPath.length);

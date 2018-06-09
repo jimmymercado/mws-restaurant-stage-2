@@ -71,6 +71,7 @@ nav h1 a {
     background-color: #eee;
     font-size: 17px;
     margin: 0;
+    margin-top:10px;
     width: calc(50% - 80px);
 }
 
@@ -128,6 +129,17 @@ nav h1 a {
   padding: 0 10px;
   width: 200px;
 }
+/*Begin add by Jimmy M */
+.filter-options label {
+  position: absolute;
+  left: -999999px;
+}
+.filter-options h2:focus {
+  outline: 0;
+  color: #ffa500;
+  text-decoration: underline;
+}
+/*End add */
 
 /* ====================== Restaurant Listing ====================== */
 #restaurants-list {
