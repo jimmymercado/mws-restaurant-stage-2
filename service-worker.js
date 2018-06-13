@@ -15,11 +15,12 @@ let cacheFiles = [
     '/index.html',
     '/restaurant.html',
     '/404.html',
-    '/offline.html'
+    '/offline.html',
+    '/favicon.png'
 
 ];
 
-let  allCaches = [staticCacheName, imagesCacheName, mapCacheName];
+let  allCaches = [staticCacheName, imagesCacheName, mapCacheName, apiCacheName];
 
 
 
@@ -66,7 +67,7 @@ self.addEventListener('fetch', function(e){
             console.log('requestUrl.pathname.startsWith("/images/") = ', requestUrl.pathname);    
             e.respondWith(servePhoto(e.request));
             return;
-        }                
+        }             
     
     }else{
         
@@ -82,7 +83,32 @@ self.addEventListener('fetch', function(e){
         }
         //return fetch(e.request);
     }
-
+    
+    e.respondWith(
+        caches.open(staticCacheName).then(function(cache){
+            return cache.match(e.request).then(function(res){
+                console.log('[ServiceWorker] found url in cache', e.request.url);
+                if(res) return res;
+    
+                return fetch(e.request).then(function(networkResponse){
+                    if(networkResponse.status === 404){
+                        return caches.match('/404.html');
+                    }
+                    console.log('[ServiceWorker] adding url to cache', e.request.url);            
+                    cache.put(e.request, networkResponse.clone());
+                    return networkResponse;
+                });
+    
+            }).catch(function(err){
+                console.log('[ServiceWorker] error in fetching and caching new data.')
+                return caches.match('/offline.html');
+            })
+        })
+    );
+    return;
+    
+    
+    /*
     e.respondWith( 
         
         caches.match(e.request).then(function(res){   
@@ -104,11 +130,36 @@ self.addEventListener('fetch', function(e){
             return caches.match('/offline.html');
         })
         
-    )
+    );
+    
+    */
     
 
 
 });
+
+function serveSite(e){
+    return caches.open(staticCacheName).then(function(cache){
+        return cache.match(e.request).then(function(res){
+            console.log('[ServiceWorker] found url in cache', e.request.url);
+            if(res) return res;
+
+            return fetch(e.request).then(function(networkResponse){
+                if(networkResponse.status === 404){
+                    return caches.match('/404.html');
+                }
+                console.log('[ServiceWorker] adding url to cache', e.request.url);            
+                cache.put(e.request, networkResponse.clone());
+                return networkResponse;
+            });
+
+        }).catch(function(err){
+            console.log('[ServiceWorker] error in fetching and caching new data.')
+            return caches.match('/offline.html');
+        });
+    });
+}
+
 
 function servePhoto(request){
     let storageUrl = request.url.replace(/_\d{2,4}px\.jpg$/, '');
@@ -119,7 +170,7 @@ function servePhoto(request){
 
             return fetch(request).then(function(networkResponse){
                 console.log('[ServiceWorker] adding images to cache', storageUrl);            
-                cache.put(storageUrl, networkResponse.clone());
+                cache.put(request, networkResponse.clone());
                 return networkResponse;
             });
         });
@@ -158,7 +209,8 @@ function serveAPI(request){
                 return networkResponse;
             });
         }).catch(function(err){
-
+            console.log('API is offline');
+            return new Response('api offline');
         })
     });
 }
