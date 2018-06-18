@@ -16,7 +16,9 @@ let cacheFiles = [
     '/restaurant.html',
     '/404.html',
     '/offline.html',
-    '/favicon.png'
+    '/favicon.png',
+    'https://unpkg.com/leaflet@1.3.1/dist/leaflet.js',
+    'https://unpkg.com/leaflet@1.3.1/dist/leaflet.css'
 
 ];
 
@@ -106,35 +108,6 @@ self.addEventListener('fetch', function(e){
         })
     );
     return;
-    
-    
-    /*
-    e.respondWith( 
-        
-        caches.match(e.request).then(function(res){   
-            if(res){         
-                console.log('[ServiceWorker] found in caches', e.request.url);
-                return res;    
-            }            
-            //return fetch(e.request);
-
-            return fetch(e.request).then(res => {
-                if(res.status === 404){
-                    return caches.match('/404.html');
-                }
-                return res;
-            })
-        })
-        .catch(function(err){
-            console.log('[ServiceWorker] error in fetching and caching new data.')
-            return caches.match('/offline.html');
-        })
-        
-    );
-    
-    */
-    
-
 
 });
 
@@ -170,7 +143,7 @@ function servePhoto(request){
 
             return fetch(request).then(function(networkResponse){
                 console.log('[ServiceWorker] adding images to cache', storageUrl);            
-                cache.put(request, networkResponse.clone());
+                cache.put(storageUrl, networkResponse.clone());
                 return networkResponse;
             });
         });
