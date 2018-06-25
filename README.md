@@ -4,7 +4,7 @@
 
 ## Project Overview: Stage 2
 
-These are my codes and solutions for Stage 2.
+These are my codes and solutions for Stage 2 .
 
 
 ## Development Environment
