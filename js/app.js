@@ -1,3 +1,11 @@
+
+/*
+import idb from '../node_modules/idb/lib/idb.js';
+idb.open('test-db', 1, function(upgadeDB){
+    let keyValStore = upgradeDB.createObjectStore('keyval');
+    keyValStore.put('world', 'hello');
+});
+*/
 /* Adding Service Worker */
 if('serviceWorker' in navigator){
 

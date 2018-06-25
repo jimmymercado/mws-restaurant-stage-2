@@ -1,4 +1,6 @@
-//import idb from 'idb';
+//import idb from '../node_modules/idb/lib/idb.js';
+
+
 
 
 /**
@@ -11,36 +13,53 @@ class DBHelper {
    * Change this to restaurants.json file location on your server.
    */
   static get DATABASE_URL() {
-    const port = 8000; // Change this to your server port
-    return `http://localhost:${port}/data/restaurants.json`;
-    //return `http://localhost:${port}/restaurants`;
+    // const port = 8000; // Change this to your server port
+    // return `http://localhost:${port}/data/restaurants.json`;
+    const port = 1337; // Change this to your server port
+    return `http://localhost:${port}/restaurants`;
   }
 
-  //BEGIN Edit by Jimmy Mercado
-
-
-
-
-
-
-
-  //END Edit
-
-
-  /**
-   * Fetch all restaurants.
-   */
-  static fetchRestaurants_NEW(callback) {
-    
-
+  static get dbPromise() {
+		if (!navigator.serviceWorker) {
+			return Promise.resolve();
+		} else {
+			return idb.open('restaurants', 1, function (upgradeDb) {
+				upgradeDb.createObjectStore('all-restaurants', { keyPath: 'id' });
+				upgradeDb.createObjectStore('all-reviews', { keyPath: 'id' });
+				upgradeDb.createObjectStore('offline-reviews', { keyPath: 'updatedAt' });
+			});
+		}
+  }
+  
+  static get idbPromise() { 
+    return idb.open('test-db', 1, function(upgradeDB){
+    let keyValStore = upgradeDB.createObjectStore('keyval');
+    keyValStore.put('world', 'hello');
+    });
   }
 
   static fetchRestaurants(callback) {
     let xhr = new XMLHttpRequest();
     xhr.open('GET', DBHelper.DATABASE_URL);
     xhr.onload = () => {
+      if (xhr.status === 200) { // Got a success response from server!        
+        const restaurants = JSON.parse(xhr.responseText);        
+        callback(null, restaurants);
+      } else { // Oops!. Got an error from server.
+        const error = (`Request failed. Returned status of ${xhr.status}`);
+        callback(error, null);
+      }
+    };
+    xhr.send();
+  }
+
+  static fetchRestaurants_OLD(callback) {
+    let xhr = new XMLHttpRequest();
+    xhr.open('GET', DBHelper.DATABASE_URL);
+    xhr.onload = () => {
       if (xhr.status === 200) { // Got a success response from server!
-        const json = JSON.parse(xhr.responseText);
+        
+        const json = JSON.parse(xhr.responseText);        
         const restaurants = json.restaurants;
         callback(null, restaurants);
       } else { // Oops!. Got an error from server.
@@ -174,7 +193,14 @@ class DBHelper {
     //return (`/img/${restaurant.photograph}`);
 
     //modified by Jimmy Mercado
-    return (`/images/${restaurant.photograph}`);
+    
+    if(restaurant.photograph){
+      return (`/images/${restaurant.photograph}`);
+      
+    }
+    //console.log('missing photo = ' + restaurant.id);
+    return (`/images/${restaurant.id}`);
+    
   }
 
   /**
@@ -191,7 +217,6 @@ class DBHelper {
     return marker;
   } 
 
-
   /*
   static mapMarkerForRestaurant(restaurant, map) {
     const marker = new google.maps.Marker({
@@ -206,16 +231,3 @@ class DBHelper {
   */
 }
 
-
-/* Adding Service Worker */
-if('serviceWorker' in navigator){
-
-  navigator.serviceWorker    
-      .register('/service-worker.js', {scope: '/'})
-      .then(function(registration){
-          console.log('ServiceWorker Registered');
-      })
-      .catch(function(err){
-          console.log('ServiceWorker Unsupported', err);
-      })
-}

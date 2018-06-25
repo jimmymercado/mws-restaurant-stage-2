@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/jimmymercado/mws-restaurant-stage-1#readme",
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babelify": "^8.0.0",
     "grunt-contrib-imagemin": "^2.0.1",
     "grunt-responsive-images": "^1.10.1"
   },
