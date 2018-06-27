@@ -11,7 +11,6 @@ let cacheFiles = [
     '/js/main.js',
     '/js/dbhelper.js',
     '/js/restaurant_info.js',
-    '/data/restaurants.json',
     '/index.html',
     '/restaurant.html',
     '/404.html',
