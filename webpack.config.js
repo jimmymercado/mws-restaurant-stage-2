@@ -6,5 +6,13 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'js/pub'),
         filename: 'bundle.js'
+    },
+    module:{
+        rules:[
+            {
+                test:/\.js/,
+                use: 'babel-loader'
+            }
+        ]
     }
 }

@@ -21,6 +21,9 @@
   },
   "homepage": "https://github.com/jimmymercado/mws-restaurant-stage-1#readme",
   "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.7.0",
     "idb": "^2.1.2"
   },
   "devDependencies": {
@@ -29,5 +32,4 @@
     "webpack": "^4.12.2",
     "webpack-cli": "^3.0.8"
   }
-  
 }

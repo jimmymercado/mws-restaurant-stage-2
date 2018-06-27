@@ -1,4 +1,4 @@
-//import idb from '../node_modules/idb/lib/idb.js';
+import idb from 'idb';
 
 
 
