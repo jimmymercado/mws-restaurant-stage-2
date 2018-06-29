@@ -1,6 +1,3 @@
-import idb from 'idb';
-
-let newMap;
 
 /**
  * Common database helper functions.
@@ -214,10 +211,23 @@ class DBHelper {
       alt: restaurant.name,
       url: DBHelper.urlForRestaurant(restaurant)
       })
-      marker.addTo(self.newMap);
+      marker.addTo(newMap);
     return marker;
   } 
 
+  /*
+  static mapMarkerForRestaurant(restaurant, map) {
+    const marker = new google.maps.Marker({
+      position: restaurant.latlng,
+      title: restaurant.name,
+      url: DBHelper.urlForRestaurant(restaurant),
+      map: map,
+      animation: google.maps.Animation.DROP}
+    );
+    return marker;
+  }
+  */
 }
 
-export {DBHelper, newMap}
+
+

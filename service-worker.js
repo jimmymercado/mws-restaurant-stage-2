@@ -1,4 +1,5 @@
-const cacheVersion = 1;
+/* Service Worker */
+let cacheVersion = 1;
 let staticCacheName = 'mws-static-' + cacheVersion;
 let imagesCacheName = 'mws-images-' + cacheVersion;
 let mapCacheName = 'mws-api-static-' + cacheVersion;
@@ -7,14 +8,14 @@ let cacheFiles = [
     '/',
     '/css/styles.css',
     '/css/media-queries.css',
-    '/js/pub/bundle.js',
     '/index.html',
     '/restaurant.html',
     '/404.html',
     '/offline.html',
     '/favicon.png',
     'https://unpkg.com/leaflet@1.3.1/dist/leaflet.js',
-    'https://unpkg.com/leaflet@1.3.1/dist/leaflet.css'
+    'https://unpkg.com/leaflet@1.3.1/dist/leaflet.css',
+    'js/pub/main.bundle.js'
 
 ];
 
@@ -29,7 +30,7 @@ self.addEventListener('install', function(e){
     e.waitUntil(
         caches.open(staticCacheName).then(function(cache){
             console.log('[ServiceWorker] caching files')
-            return cache.addAll(cacheFiles);
+            return cache.addAll(cacheFiles).catch((error) => console.log(`Service Worker Open Erro = ${error}`));
         })
     )
 
@@ -69,9 +70,11 @@ self.addEventListener('fetch', function(e){
     
     }else{
         
-        if ((e.request.url.indexOf('https://maps.gstatic.com/mapfiles/') == 0) || (e.request.url.indexOf('https://fonts.gstatic.com/') == 0)) {
-            console.log('googleStaticCall = ', e.request.url);
-            e.respondWith(serveGoogleStatic(e.request));
+        if ((e.request.url.indexOf('https://maps.gstatic.com/mapfiles/') == 0) || 
+            (e.request.url.indexOf('https://fonts.gstatic.com/') == 0) || 
+            (e.request.url.indexOf('https://api.tiles.mapbox.com/') == 0)) {
+            console.log('mapStaticCall = ', e.request.url);
+            e.respondWith(serveMapStatic(e.request));
             return;
         }
         if ((e.request.url.indexOf('https://maps.googleapis.com/') == 0) && (e.request.method === 'GET')) {                
@@ -146,6 +149,22 @@ function servePhoto(request){
     });
 }
 
+function serveMapStatic(request){
+    
+    return caches.open(mapCacheName).then(function(cache){
+        return cache.match(request.url).then(function(res){            
+            if(res){
+                console.log('[ServiceWorker] found GoogleStatic data in cache', request.url);
+                return res;
+            }
+            console.log('[ServiceWorker] adding GoogleStatic data to cache', request.url);
+            return fetch(request).then(function(networkResponse){
+                cache.put(request, networkResponse.clone());
+                return networkResponse;
+            });
+        });
+    });
+}
 
 function serveGoogleStatic(request){
     

@@ -1,7 +1,7 @@
 
-import {DBHelper, newMap}  from './dbhelper';
 
-var restaurants, neighborhoods, cuisines;
+let restaurants, neighborhoods, cuisines;
+var newMap;
 var markers = [];
 
 
@@ -11,7 +11,6 @@ var markers = [];
  */
 document.addEventListener('DOMContentLoaded', (event) => {
   initMap(); 
-  //updateRestaurants();
   fetchNeighborhoods();
   fetchCuisines();
 });
@@ -87,11 +86,10 @@ let initMap = () => {
       '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
       'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     id: 'mapbox.streets'
-  }).addTo(self.newMap);
+  }).addTo(newMap);
 
   updateRestaurants();
 }
-
 
 /**
  * Update page and map for current restaurants.

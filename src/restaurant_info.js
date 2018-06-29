@@ -1,6 +1,6 @@
-import {DBHelper, newMap}  from './dbhelper';
 
 var restaurant;
+var newMap;
 
 /**
  * Initialize map as soon as the page is loaded.
@@ -29,12 +29,32 @@ var initMap = () => {
           '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
           'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         id: 'mapbox.streets'    
-      }).addTo(self.newMap);
+      }).addTo(newMap);
       fillBreadcrumb();
       DBHelper.mapMarkerForRestaurant(self.restaurant, self.newMap);
     }
   });
 }
+
+/**
+* Initialize Google map, called from HTML.
+
+window.initMap = () => {
+  fetchRestaurantFromURL((error, restaurant) => {
+    if (error) { // Got an error!
+      console.error(error);
+    } else {
+      self.map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 16,
+        center: restaurant.latlng,
+        scrollwheel: false
+      });
+      fillBreadcrumb();
+      DBHelper.mapMarkerForRestaurant(self.restaurant, self.map);
+    }
+  });
+}
+ */
 
 
 /**
