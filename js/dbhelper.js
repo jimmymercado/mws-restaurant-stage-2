@@ -186,12 +186,12 @@ class DBHelper {
     //modified by Jimmy Mercado
     
     if(restaurant.photograph){
-      return (`/images/${restaurant.photograph}`);
+      return (`/pub/img/${restaurant.photograph}`);
       
     }
     //missing photo
     //return (`/images/${restaurant.id}`);
-    return ('/images/no-image');
+    return ('/pub/img/no-image');
     
   }
 
