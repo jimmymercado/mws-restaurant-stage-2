@@ -11,7 +11,6 @@ var markers = [];
  */
 document.addEventListener('DOMContentLoaded', (event) => {
   initMap(); 
-  //updateRestaurants();
   fetchNeighborhoods();
   fetchCuisines();
 });

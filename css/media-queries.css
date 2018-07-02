@@ -178,7 +178,8 @@
 
 @media screen and (min-width:1140px) {
     #restaurants-list{
-        max-width: 1140px; 
+        /*max-width: 1140px; */
+        padding: 30px 0;
         width:100%;
         margin:0 auto;
     }

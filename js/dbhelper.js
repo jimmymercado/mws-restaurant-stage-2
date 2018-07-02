@@ -24,16 +24,8 @@ class DBHelper {
 		} else {
 			return idb.open('restaurants', 1, function (upgradeDb) {
 				upgradeDb.createObjectStore('restaurants', { keyPath: 'id' });
-				upgradeDb.createObjectStore('reviews', { keyPath: 'id' });
 			});
 		}
-  }
-  
-  static get dbPromise() { 
-    return idb.open('test-db', 1, function(upgradeDB){
-    let keyValStore = upgradeDB.createObjectStore('keyval');
-    keyValStore.put('world', 'hello');
-    });
   }
 
   static fetchRestaurants(callback) {
@@ -44,7 +36,7 @@ class DBHelper {
       store.getAll()
       .then(restaurants =>{
         if(restaurants.length > 1){
-          console.log('Restaurants getting from indexDB', restaurants);
+          //console.log('Restaurants getting from indexDB', restaurants);
           callback(null, restaurants)
         }else{
           fetch(DBHelper.DATABASE_URL)
@@ -54,11 +46,11 @@ class DBHelper {
             const store = trans.objectStore('restaurants');    
             resp.forEach(restaurant => store.put(restaurant));
             
-            console.log('Restaurants from network and saved to indexDB' , resp);
+            //console.log('Restaurants from network and saved to indexDB' , resp);
             callback(null, resp);
           })
           .catch(err => {
-            console.log(`[Network fetch error: ${err}`);
+            //console.log(`[Network fetch error: ${err}`);
             callback(err, null)
           })
         }
@@ -69,24 +61,6 @@ class DBHelper {
     })
     
   }
-
-  static fetchRestaurants_OLD(callback) {
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', DBHelper.DATABASE_URL);
-    xhr.onload = () => {
-      if (xhr.status === 200) { // Got a success response from server!
-        //const json = JSON.parse(xhr.responseText);
-        //const restaurants = json.restaurants;
-        const restaurants = JSON.parse(xhr.responseText);   
-        callback(null, restaurants);
-      } else { // Oops!. Got an error from server.
-        const error = (`Request failed. Returned status of ${xhr.status}`);
-        callback(error, null);
-      }
-    };
-    xhr.send();
-  }
-
 
   /**
    * Fetch a restaurant by its ID.
@@ -215,8 +189,9 @@ class DBHelper {
       return (`/images/${restaurant.photograph}`);
       
     }
-    //console.log('missing photo = ' + restaurant.id);
-    return (`/images/${restaurant.id}`);
+    //missing photo
+    //return (`/images/${restaurant.id}`);
+    return ('/images/no-image');
     
   }
 

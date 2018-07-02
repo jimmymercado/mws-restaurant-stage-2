@@ -12,24 +12,29 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jimmymercado/mws-restaurant-stage-1.git"
+    "url": "git+https://github.com/jimmymercado/mws-restaurant-stage-2.git"
   },
   "author": "JimmyM",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jimmymercado/mws-restaurant-stage-1/issues"
+    "url": "https://github.com/jimmymercado/mws-restaurant-stage-2/issues"
   },
-  "homepage": "https://github.com/jimmymercado/mws-restaurant-stage-1#readme",
+  "homepage": "https://github.com/jimmymercado/mws-restaurant-stage-2#readme",
   "dependencies": {
     "idb": "^2.1.2"
   },
   "devDependencies": {
-    "grunt-contrib-imagemin": "^2.0.1",
-    "grunt-responsive-images": "^1.10.1",
-    "webpack": "^4.12.2",
-    "webpack-cli": "^3.0.8",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.4",
-    "babel-preset-env": "^1.7.0"
+    "babel-preset-env": "^1.7.0",
+    "css-loader": "^0.28.11",
+    "file-loader": "^1.1.11",
+    "grunt-contrib-imagemin": "^2.0.1",
+    "grunt-responsive-images": "^1.10.1",
+    "mini-css-extract-plugin": "^0.4.1",
+    "optimize-css-assets-webpack-plugin": "^4.0.3",
+    "uglifyjs-webpack-plugin": "^1.2.7",
+    "webpack": "^4.12.2",
+    "webpack-cli": "^3.0.8"
   }
 }
