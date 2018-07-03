@@ -21,7 +21,7 @@ These are my codes and solutions for Stage 2
    Performance: >70  
    Accessibility: >90  
 
-## Installing and Run Locally
+## Installing and Running Locally
 ### Web App
 - Download or clone this repo
 - From command line, enter `npm run start`
