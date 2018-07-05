@@ -22,12 +22,13 @@ These are my codes and solutions for Stage 3
    Accessibility: >90  
 
 ## Installing and Running Locally
-### Web App
-- Download or clone this repo
-- From command line, enter `npm run start`
-- Go to your Chrome Browser (Chrome Canary is recommended) and go to `http://localhost:8000`
 
 ### Data Server
 - Download or clone <a href="https://github.com/jimmymercado/mws-restaurant-stage-2-data" target="_blank">data server</a> 
 - Follow instructions in the Readme
 - Run side-by-side with the web app
+
+### Web App
+- Download or clone this repo
+- From command line, enter `npm run start`
+- Go to your Chrome Browser (Chrome Canary is recommended) and go to `http://localhost:8000`
